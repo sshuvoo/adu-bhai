@@ -1,12 +1,13 @@
 'use client'
 
-import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { CgAttachment } from 'react-icons/cg'
 import { FaArrowAltCircleUp } from 'react-icons/fa'
 import { promptRequest } from '../actions/prompt-request'
+import { SystemReply } from './system-reply'
+import Image from 'next/image'
 
-interface ChatHistory {
+export interface ChatHistory {
   id: string
   role: 'model' | 'user'
   parts: { text: string }[]
@@ -50,7 +51,7 @@ export function ChatForm() {
   return (
     <div className="mx-auto flex h-full max-w-3xl flex-col py-8 text-white">
       <div className="flex-grow space-y-6 overflow-y-auto pb-8">
-        {chatHistory.map((chatItem) => {
+        {chatHistory.length>0? chatHistory.map((chatItem) => {
           if (chatItem.role === 'user') {
             return (
               <div key={chatItem.id} className="flex flex-col items-end">
@@ -65,25 +66,19 @@ export function ChatForm() {
               </div>
             )
           }
-          return (
-            <div key={chatItem.id} className="grid grid-cols-[auto,1fr] gap-3">
-              <div className="size-9">
-                <Image
-                  src="/adu_vai.webp"
-                  alt="adhu vai avatar"
-                  width={36}
-                  height={36}
-                  className="rounded-full"
-                />
-              </div>
-              <div>
-                {chatItem.parts.map((item, i) => (
-                  <p key={i}>{item.text}</p>
-                ))}
-              </div>
-            </div>
-          )
-        })}
+          return <SystemReply key={chatItem.id} chatItem={chatItem}/>
+        }):
+        <div className='h-full flex flex-col justify-center items-center gap-4'>
+            <Image
+              src="/adu_vai.webp"
+              alt="adhu vai avatar"
+              width={150}
+              height={150}
+              className='rounded-full'
+            />
+            <h1 className='text-3xl font-medium'>Hey! It&apos;s your Adu Vai</h1>
+          </div>
+        }
         <div ref={viewRef} />
       </div>
       <form
