@@ -1,15 +1,17 @@
-import Image from "next/image";
-import { ChatHistory } from "./chat-form";
-import Markdown from 'react-markdown'
-import remarkGfm from "remark-gfm";
-import rehypeKatex from "rehype-katex";
-import rehypeHighlight from "rehype-highlight";
-import rehypeHighlightLines from "rehype-highlight-code-lines";
-import "highlight.js/styles/github-dark.css"; 
+import Image from 'next/image'
+import { ChatHistory } from './chat-form'
+import { MarkdownItem } from './markdown-item'
+import { RefObject } from 'react'
 
-export function SystemReply({ chatItem }: { chatItem: ChatHistory }) {
+export function SystemReply({
+  chatItem,
+  viewRef,
+}: {
+  chatItem: ChatHistory
+  viewRef: RefObject<HTMLDivElement>
+}) {
   return (
-    <div key={chatItem.id} className="grid grid-cols-[auto,1fr] gap-3  pb-4">
+    <div key={chatItem.id} className="grid grid-cols-[auto,1fr] gap-3 pb-4">
       <div className="size-9">
         <Image
           src="/adu_vai.webp"
@@ -19,9 +21,9 @@ export function SystemReply({ chatItem }: { chatItem: ChatHistory }) {
           className="rounded-full"
         />
       </div>
-      <div className="overflow-x-auto prose prose-invert max-w-full">
+      <div className="prose prose-invert max-w-full overflow-x-auto">
         {chatItem.parts.map((item, i) => (
-          <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeKatex, rehypeHighlight, rehypeHighlightLines]} key={i}>{item.text}</Markdown>
+          <MarkdownItem viewRef={viewRef} key={i} text={item.text} />
         ))}
       </div>
     </div>
