@@ -106,60 +106,73 @@ export function ChatForm() {
   }
 
   return (
-    <div className="mx-auto flex h-full max-w-3xl flex-col py-8 text-white">
-      <MemorizedChatDisplay
-        chatHistory={chatHistory}
-        forceSubmit={forceSubmit}
-      />
-      <form
-        ref={formRef}
-        onSubmit={(e) => {
-          e.preventDefault()
-          setChatHistory((pre) => [
-            ...pre,
-            {
-              id: crypto.randomUUID(),
-              role: 'user',
-              parts: [{ text: prompt }],
-            },
-          ])
-          handleSubmit()
-        }}
-        className="w-full"
-      >
-        <label className="block w-full cursor-text space-y-4 rounded-3xl bg-[#303030] px-4 py-4">
-          <textarea
-            ref={promptBox}
-            className="h-auto max-h-[300px] w-full resize-none bg-transparent text-white focus:outline-none"
-            placeholder="Ask Something To Adu Bhai"
-            value={prompt}
-            rows={1}
-            onKeyDown={handleKeyDown}
-            onChange={(e) => void setPrompt(e.target.value)}
+    <div className="flex h-full flex-col text-white">
+      <div className="flex flex-1 justify-center overflow-y-auto">
+        <div className="w-full max-w-3xl px-2 sm:px-4 lg:px-0">
+          <MemorizedChatDisplay
+            chatHistory={chatHistory}
+            forceSubmit={forceSubmit}
           />
-          <input
-            disabled
-            onChange={handleFileChange}
-            accept={allowedMimeTypes.join(', ')}
-            ref={fileRef}
-            type="file"
-            hidden
-            multiple
-          />
-          <div className="flex items-center justify-between text-white">
-            <button onClick={handleClickFile} type="button" className="size-5">
-              <CgAttachment className="size-full" />
-            </button>
-            <button
-              type="submit"
-              disabled={prompt.trim() === ''}
-              className="size-6 disabled:text-gray-500"
-            >
-              <FaArrowAltCircleUp className="size-full" />
-            </button>
-          </div>
-        </label>
-      </form>
+        </div>
+      </div>
+      <div className="flex flex-col items-center">
+        <form
+          ref={formRef}
+          onSubmit={(e) => {
+            e.preventDefault()
+            setChatHistory((pre) => [
+              ...pre,
+              {
+                id: crypto.randomUUID(),
+                role: 'user',
+                parts: [{ text: prompt }],
+              },
+            ])
+            handleSubmit()
+          }}
+          className="w-full max-w-3xl px-2 sm:px-4 lg:px-0"
+        >
+          <label className="block w-full cursor-text space-y-4 rounded-3xl border border-[#3e3e3e] bg-[#303030] px-4 py-4">
+            <textarea
+              ref={promptBox}
+              className="h-auto max-h-[300px] w-full resize-none bg-transparent text-white focus:outline-none"
+              placeholder="Ask Something To Adu Bhai"
+              value={prompt}
+              rows={1}
+              onKeyDown={handleKeyDown}
+              onChange={(e) => void setPrompt(e.target.value)}
+            />
+            <input
+              disabled
+              onChange={handleFileChange}
+              accept={allowedMimeTypes.join(', ')}
+              ref={fileRef}
+              type="file"
+              hidden
+              multiple
+            />
+            <div className="flex items-center justify-between text-white">
+              <button
+                onClick={handleClickFile}
+                type="button"
+                className="size-5"
+              >
+                <CgAttachment className="size-full" />
+              </button>
+              <button
+                type="submit"
+                disabled={prompt.trim() === ''}
+                className="size-6 disabled:text-gray-500"
+              >
+                <FaArrowAltCircleUp className="size-full" />
+              </button>
+            </div>
+          </label>
+        </form>
+        <p className="py-2 text-xs">
+          Adu Bhai reads in class Six! So He can make mistakes.
+        </p>
+      </div>
     </div>
   )
 }

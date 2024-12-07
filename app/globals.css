@@ -4,20 +4,20 @@
 
 /* width */
 ::-webkit-scrollbar {
-  width: 0px;
-  height: 6px;
+  width: 10px;
+  height: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
-  border-radius: 10px;
+  border-radius: 6px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
-  border-radius: 10px;
+  border-radius: 6px;
 }
 
 /* Handle on hover */
