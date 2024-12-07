@@ -1,14 +1,19 @@
 import { memo, useRef } from 'react'
 import { BlankScreen } from './blank-screen'
 import { ChatHistory } from './chat-form'
+import { PendingAvatar } from './pending-avatar'
 import { SystemReply } from './system-reply'
 
 function ChatDisplay({
   chatHistory,
   forceSubmit,
+  onSetIdle,
+  status,
 }: {
   chatHistory: ChatHistory[]
   forceSubmit: (prePrompt: string) => void
+  onSetIdle: () => void
+  status: 'pending' | 'typing' | 'idle'
 }) {
   const viewRef = useRef<HTMLDivElement>(null)
 
@@ -36,9 +41,11 @@ function ChatDisplay({
                 viewRef={viewRef}
                 key={chatItem.id}
                 chatItem={chatItem}
+                onSetIdle={onSetIdle}
               />
             )
           })}
+          {status === 'pending' && <PendingAvatar />}
         </div>
       ) : (
         <BlankScreen forceSubmit={forceSubmit} />

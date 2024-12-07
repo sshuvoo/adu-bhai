@@ -10,14 +10,14 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 6px;
+  background: #171717;
+  border-radius: 4px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
 /* Handle on hover */

@@ -6,9 +6,11 @@ import { RefObject } from 'react'
 export function SystemReply({
   chatItem,
   viewRef,
+  onSetIdle,
 }: {
   chatItem: ChatHistory
   viewRef: RefObject<HTMLDivElement>
+  onSetIdle: () => void
 }) {
   return (
     <div key={chatItem.id} className="grid grid-cols-[auto,1fr] gap-3 pb-4">
@@ -21,9 +23,14 @@ export function SystemReply({
           className="rounded-full bg-white"
         />
       </div>
-      <div className="prose prose-invert max-w-full overflow-x-auto">
+      <div className="prose prose-invert max-w-full overflow-x-auto prose-code:rounded-md prose-code:px-1 prose-code:py-1 prose-code:text-orange-500">
         {chatItem.parts.map((item, i) => (
-          <MarkdownItem viewRef={viewRef} key={i} text={item.text} />
+          <MarkdownItem
+            onSetIdle={onSetIdle}
+            viewRef={viewRef}
+            key={i}
+            text={item.text}
+          />
         ))}
       </div>
     </div>

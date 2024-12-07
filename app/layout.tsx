@@ -22,11 +22,11 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface Children {
   children: React.ReactNode
-}>) {
+}
+
+export default function RootLayout({ children }: Readonly<Children>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>{children}</body>

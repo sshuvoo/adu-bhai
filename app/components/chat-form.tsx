@@ -1,8 +1,15 @@
 'use client'
 
-import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react'
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { CgAttachment } from 'react-icons/cg'
-import { FaArrowAltCircleUp } from 'react-icons/fa'
+import { FaArrowAltCircleUp, FaSquareFull } from 'react-icons/fa'
 import { promptRequest } from '../actions/prompt-request'
 import { MemorizedChatDisplay } from './chat-display'
 import { imageUpload } from '../actions/image-upload'
@@ -27,6 +34,7 @@ export function ChatForm() {
   const promptBox = useRef<HTMLTextAreaElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const fileRef = useRef<HTMLInputElement>(null)
+  const [status, setStatus] = useState<'pending' | 'typing' | 'idle'>('idle')
   // const [selectedFiles, setSelectedFiles] = useState<File[] | null>(null)
 
   const handleSubmit = async (prePrompt?: string) => {
@@ -50,8 +58,15 @@ export function ChatForm() {
       }
     } catch (error) {
       console.log(error)
+      setStatus('idle')
+    } finally {
+      setStatus('typing')
     }
   }
+
+  const onSetIdle = useCallback(() => {
+    setStatus('idle')
+  }, [])
 
   const forceSubmit = (prePrompt: string) => {
     setChatHistory((pre) => [
@@ -62,12 +77,18 @@ export function ChatForm() {
         parts: [{ text: prePrompt }],
       },
     ])
+    setStatus('pending')
     handleSubmit(prePrompt)
   }
 
   const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter') {
-      if (!event.shiftKey && formRef.current) {
+      if (
+        !event.shiftKey &&
+        formRef.current &&
+        prompt.trim() !== '' &&
+        status === 'idle'
+      ) {
         event.preventDefault()
         formRef.current.requestSubmit()
       }
@@ -110,8 +131,10 @@ export function ChatForm() {
       <div className="flex flex-1 justify-center overflow-y-auto">
         <div className="w-full max-w-3xl px-2 sm:px-4 lg:px-0">
           <MemorizedChatDisplay
+            status={status}
             chatHistory={chatHistory}
             forceSubmit={forceSubmit}
+            onSetIdle={onSetIdle}
           />
         </div>
       </div>
@@ -128,6 +151,7 @@ export function ChatForm() {
                 parts: [{ text: prompt }],
               },
             ])
+            setStatus('pending')
             handleSubmit()
           }}
           className="w-full max-w-3xl px-2 sm:px-4 lg:px-0"
@@ -159,13 +183,22 @@ export function ChatForm() {
               >
                 <CgAttachment className="size-full" />
               </button>
-              <button
-                type="submit"
-                disabled={prompt.trim() === ''}
-                className="size-6 disabled:text-gray-500"
-              >
-                <FaArrowAltCircleUp className="size-full" />
-              </button>
+              {status === 'idle' ? (
+                <button
+                  type="submit"
+                  disabled={prompt.trim() === '' || status !== 'idle'}
+                  className="size-6 disabled:text-gray-500"
+                >
+                  <FaArrowAltCircleUp className="size-full" />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="flex size-6 items-center justify-center rounded-full bg-white"
+                >
+                  <FaSquareFull className="size-2 text-black" />
+                </button>
+              )}
             </div>
           </label>
         </form>

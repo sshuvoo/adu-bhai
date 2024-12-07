@@ -1,16 +1,18 @@
-import Markdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import rehypeKatex from 'rehype-katex'
-import rehypeHighlight from 'rehype-highlight'
 import 'highlight.js/styles/github-dark.css'
 import { RefObject, useEffect, useRef, useState } from 'react'
+import Markdown from 'react-markdown'
+import rehypeHighlight from 'rehype-highlight'
+import rehypeKatex from 'rehype-katex'
+import remarkGfm from 'remark-gfm'
 
 export function MarkdownItem({
   text,
   viewRef,
+  onSetIdle,
 }: {
   text: string
   viewRef: RefObject<HTMLDivElement>
+  onSetIdle: () => void
 }) {
   const [markDown, setMarkDown] = useState('')
   const index = useRef(0)
@@ -23,6 +25,7 @@ export function MarkdownItem({
       setMarkDown((prev) => prev + chunk)
       index.current += CHUNK_SIZE
       if (index.current > text.length) {
+        onSetIdle()
         clearInterval(intervalID.current)
       }
     }, 50)
@@ -30,7 +33,7 @@ export function MarkdownItem({
     return () => {
       clearInterval(intervalID.current)
     }
-  }, [text])
+  }, [text, onSetIdle])
 
   useEffect(() => {
     if (viewRef.current) {
