@@ -19,11 +19,11 @@ function ChatDisplay({
           {chatHistory.map((chatItem) => {
             if (chatItem.role === 'user') {
               return (
-                <div key={chatItem.id} className="flex flex-col items-end">
+                <div key={chatItem.id} className="flex justify-end">
                   {chatItem.parts.map((item, i) => (
                     <div
                       key={i}
-                      className="max-w-lg whitespace-pre-wrap rounded-2xl bg-[#272727] px-4 py-2"
+                      className="max-w-lg whitespace-pre-wrap break-words rounded-2xl bg-[#272727] px-4 py-2"
                     >
                       {item.text}
                     </div>
