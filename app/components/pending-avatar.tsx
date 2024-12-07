@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { HiOutlineChatBubbleLeftEllipsis } from 'react-icons/hi2'
 
 const aiThinkingMessages: string[] = [
@@ -33,7 +34,11 @@ const aiThinkingMessages: string[] = [
 export function PendingAvatar() {
   return (
     <div className="grid grid-cols-[auto,1fr] gap-3 pb-4">
-      <div className="relative size-9">
+      <Link
+        target="_blank"
+        href="https://github.com/sshuvoo"
+        className="relative size-9"
+      >
         <Image
           src="/adu_bhai.svg"
           alt="adhu vai avatar"
@@ -42,7 +47,7 @@ export function PendingAvatar() {
           className="rounded-full bg-white"
         />
         <HiOutlineChatBubbleLeftEllipsis className="absolute -right-4 -top-5 text-2xl" />
-      </div>
+      </Link>
       <div>
         {
           aiThinkingMessages[

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 
 const aduBhaiFacts: string[] = [
@@ -44,13 +45,15 @@ export function BlankScreen({
   return (
     <div className="flex h-full flex-col py-3">
       <div className="flex flex-1 flex-col items-center justify-center gap-4">
-        <Image
-          src="/adu_bhai.svg"
-          alt="adhu vai avatar"
-          width={100}
-          height={100}
-          className="rounded-full bg-white"
-        />
+        <Link target="_blank" href="https://github.com/sshuvoo">
+          <Image
+            src="/adu_bhai.svg"
+            alt="adhu vai avatar"
+            width={100}
+            height={100}
+            className="rounded-full bg-white"
+          />
+        </Link>
         <h1 className="w-full px-4 text-center text-lg font-medium">{chunk}</h1>
       </div>
       <div className="flex flex-wrap justify-center gap-2 text-sm">
