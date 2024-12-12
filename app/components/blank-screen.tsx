@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 
 const aduBhaiFacts: string[] = [
-  'Forever in Class Six: Adu Bhai is the eternal sixth-grader who somehow never gets promoted, even though his son is in class seven.',
+  'Here sleeps Adu Mia who was promoted from Class VII to Class VIII.',
+  'Forever in Class Seven: Adu Bhai is the eternal seventh-grader who somehow never gets promoted, even though his son is in class eight.',
   "Master of Mischief: He's the ultimate troublemaker, always finding ways to turn ordinary situations into hilarious adventures.",
   'Logic Expert (Sort of): Adu Bhai has his own unique logic for everything, which often leaves everyone laughing—or scratching their heads!',
   "Parents' Eternal Headache: His parents have accepted that Adu Bhai's antics are part of life, though they still hope he'll focus on his studies someday.",

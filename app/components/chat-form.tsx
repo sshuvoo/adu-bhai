@@ -203,7 +203,7 @@ export function ChatForm() {
           </label>
         </form>
         <p className="py-2 text-xs text-[#b8b8b8]">
-          Adu Bhai studies in class six! So he can make mistakes.
+          Adu Bhai studies in class VII, So he can make mistakes.
         </p>
       </div>
     </div>
